@@ -19,6 +19,4 @@ public:
 
 	int findCosts(std::vector < std::vector <int> > &bc, std::vector <int> &costs);
 
-	int printData();	// For debugging purposes
-
 };
