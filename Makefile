@@ -2,16 +2,16 @@ all:
 	make backtrack bruteForce dynamic huffman
 
 bruteForce:
-	g++ -o bruteForce.out bruteForce.cpp
+	g++ -o bruteForce.out bruteForce.cpp -g
 
 dynamic:
-	g++ -o dynamic.out dynamic.cpp
+	g++ -o dynamic.out dynamic.cpp -g
 
 backtrack:
-	g++ -o backtrack.out backtrack.cpp
+	g++ -o backtrack.out backtrack.cpp -g
 
 huffman:
-	g++ -o huffman.out huffman.cpp
+	g++ -o huffman.out huffman.cpp -g
 
 clean:
 	rm -f *out

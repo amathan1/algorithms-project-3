@@ -10,8 +10,9 @@ readCsv{
 
 public:
 
-	int readFile(std::string fileName);
-	int buildEnv();
+	int readFile(std::string, bool);
+	int buildForKnapsack();
+	int buildForHuffman();
 
 protected:
 	
@@ -23,7 +24,7 @@ protected:
 
 
 int 
-readCsv::readFile(std::string fileName)
+readCsv::readFile(std::string fileName, bool huffman = false)
 {
 	/*
 	* Read from file
@@ -42,12 +43,16 @@ readCsv::readFile(std::string fileName)
 
 	// When you put huffman here, just have a condition here and return by calling that function
 
-	return buildEnv();
+	if (!huffman) {
+		return buildForKnapsack();
+	} else {
+		return buildForHuffman();
+	}
 }
 
 
 int 
-readCsv::buildEnv()
+readCsv::buildForKnapsack()
 {
 	/*
 	* Builds the whole knapsack environment
@@ -83,4 +88,14 @@ readCsv::buildEnv()
 
 	return 0;
 }
+
+
+int 
+readCsv::buildForHuffman()
+{
+
+
+	return 0;
+}
+
 
