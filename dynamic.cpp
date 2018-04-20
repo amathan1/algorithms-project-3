@@ -18,10 +18,11 @@ Dynamic::initializeMatrix()
 		if (this->items[1][i]<min_wt)	min_wt = this->items[1][i];
 	}
 
-	quick_sort(0, this->n_elem);
+	// quick_sort(0, this->n_elem);
 
 	for (int i = 0; i < n_elem; i++) {
-		this->wt_map[this->items[1][i]] = i+1;
+		// this->wt_map[this->items[1][i]] = i+1;
+		this->board[i+1][this->items[1][i]] = this->board[0][i];
 	}
 
 	return 0;
@@ -46,10 +47,7 @@ Dynamic::findOptimalSolution()
 
 		for (int j = 1; j <= this->max_wt; j++) {
 
-			cur = wt_map[j];
-			if (cur > 0 && this->items[0][cur]  && cur <= i) {
-				if (this->board[i][j] < this->items[1][cur])
-			}
+			if (this->board[i][j] > )
 
 		}
 
