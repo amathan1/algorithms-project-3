@@ -1,4 +1,4 @@
-/* All knapsack methods get data from same format*/
+/* All questions inherit this class to read csv file*/
 #include <cstdlib>
 #include <string>
 #include <vector>

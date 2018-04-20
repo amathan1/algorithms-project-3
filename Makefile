@@ -5,7 +5,7 @@ bruteForce:
 	g++ -o bruteForce.out bruteForce.cpp -g
 
 dynamic:
-	g++ -o dynamic.out dynamic.cpp -g
+	g++ -o dynamic.out dynamic.cpp -g -std=c++11
 
 backtrack:
 	g++ -o backtrack.out backtrack.cpp -g
