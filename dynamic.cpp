@@ -25,7 +25,6 @@ Dynamic::initializeMatrix()
 	}
 
 	for (int i = 0; i < n_elem; i++) {
-		this->wt_map[this->items[1][i]] = i+1;
 		this->board[i+1][this->items[1][i]] = this->items[0][i];
 	}
 
@@ -74,6 +73,9 @@ Dynamic::findOptimalSolution()
 int
 Dynamic::printResults()
 {
+	/*
+	* Prints out the results
+	*/
 
 	return 0;
 }

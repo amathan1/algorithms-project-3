@@ -1,7 +1,6 @@
 
 #include "readCsv.hpp"
 #include <random>
-#include <map>
 
 
 class
@@ -25,9 +24,5 @@ public:
 
 private:
 	int** board;
-	std::vector <int> map;
-	int max_wt, min_wt;
-	std::map<int, int> wt_map;
-
 };
 

@@ -2,7 +2,7 @@
 #include "bruteForce.hpp"
 #include <cmath>
 
-int 
+inline int 
 bruteForce::findCombinations(int &r, int st, std::vector <int> &combination, std::vector < std::vector <int> >& cur_comb, int &done, int &n_c_r) 
 {
 	/*

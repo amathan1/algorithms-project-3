@@ -15,7 +15,7 @@ public:
 
 	int binomialCoeffecient(int, std::vector < std::vector <int> >&);
 
-	int findCombinations(int&, int, std::vector <int>&, std::vector < std::vector <int> >&, int&, int&);
+	inline int findCombinations(int&, int, std::vector <int>&, std::vector < std::vector <int> >&, int&, int&);
 
 	int findCosts(std::vector < std::vector <int> > &bc, std::vector <int> &costs);
 

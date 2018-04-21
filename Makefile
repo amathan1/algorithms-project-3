@@ -8,7 +8,7 @@ dynamic:
 	g++ -o dynamic.out dynamic.cpp -g -std=c++11
 
 backtrack:
-	g++ -o backtrack.out backtrack.cpp -g
+	g++ -o backtrack.out backtrack.cpp -g -std=c++11
 
 huffman:
 	g++ -o huffman.out huffman.cpp -g
