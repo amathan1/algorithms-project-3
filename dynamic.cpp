@@ -4,7 +4,6 @@
 int 
 Dynamic::printBoard()
 {
-
 	for (int i = 0; i <= this->n_elem; i++) {
 		for (int j = 0; j <= this->cc+1; j++) {
 			std::cout << this->board[i][j] << " ";
@@ -46,36 +45,27 @@ Dynamic::max(int a, int b)
 int 
 Dynamic::findOptimalSolution()
 {
-	/*
-	* Builds the matrix structure for finding the optimal solution
-	*/
+	/* Builds the matrix structure for finding the optimal solution */
 	int cur;
 
 	for (int i = 1; i <= this->n_elem; i++) {
 		for (int j = 1; j <= this->cc+1; j++) {
 			if (this->items[1][i-1] > j) {
-
 				this->board[i][j] = this->board[i][j-1];
 				if (this->board[i][j] < this->board[i-1][j]) this->board[i][j] = this->board[i-1][j];
-			
 			} else {
-			
 				this->board[i][j] = max(this->board[i-1][j], this->board[i-1][j-this->items[1][i-1]] + this->items[0][i-1]);
-			
 			  }
 		}
 	}
-
 	printBoard();
 }
 
 
 int
-Dynamic::printResults()
+Dynamic::printOut()
 {
-	/*
-	* Prints out the results
-	*/
+	/* Print out the results */
 
 	return 0;
 }

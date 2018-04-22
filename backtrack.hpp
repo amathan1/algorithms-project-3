@@ -14,10 +14,10 @@ public:
 
 	int findOptimalSolution();
 
-	int recursivelyBacktrack(int, int, int, int, std::vector <int>&, std::vector <int>, int&);
+	int recursivelyBacktrack(int, int, int, std::vector <int>&, std::vector <int>, int&);
 
 	inline void clone(std::vector <int>&, std::vector <int>&);
 
-	int printResults();
+	int printOut(std::vector <int>&);
 
 };

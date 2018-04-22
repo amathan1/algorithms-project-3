@@ -20,7 +20,7 @@ public:
 
 	int printBoard();
 
-	int printResults();	
+	int printOut;	
 
 private:
 	int** board;

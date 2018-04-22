@@ -11,7 +11,7 @@ backtrack:
 	g++ -o backtrack.out backtrack.cpp -g -std=c++11
 
 huffman:
-	g++ -o huffman.out huffman.cpp -g
+	g++ -o huffman.out huffman.cpp -g -std=c++11
 
 clean:
 	rm -f *out

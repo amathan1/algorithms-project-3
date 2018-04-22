@@ -88,10 +88,7 @@ bruteForce::findCosts(std::vector < std::vector <int> > &bc, std::vector <int> &
 int
 bruteForce::findOptimalCombination()
 {
-	/*
-	* Finds the optimal solution to 0/1 knapsack problem using brute force approach. 
-	* Extremely inefficient. Do not try this at home. Haha
-	*/
+	/* Finds the optimal solution to 0/1 knapsack problem using brute force method */
 
 	int total_combinations = pow(2, this->n_elem);
 

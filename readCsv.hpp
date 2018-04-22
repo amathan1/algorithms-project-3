@@ -16,8 +16,10 @@ public:
 
 protected:
 	
-	std::vector <std::string> wholeCsv;	
+	std::vector <std::string> wholeCsv;
 	std::vector <std::vector <int> > items;	// Items are stored as {{set_of_item_values}, {set_of_item_weights}}
+	std::vector <std::string> chars;		// Characters to encode using huffman
+	std::vector <int> freqs;				// Corresponding frequencies of all the characters
 	int cc, n_elem;
 
 };
@@ -26,10 +28,8 @@ protected:
 int 
 readCsv::readFile(std::string fileName, bool huffman = false)
 {
-	/*
-	* Read from file
-	*/
-
+	/* Read from file */
+	
 	std::string line;
 	std::ifstream matrixFile;
 	matrixFile.open(fileName.c_str());
@@ -40,8 +40,6 @@ readCsv::readFile(std::string fileName, bool huffman = false)
 		getline(matrixFile, line);
 		this->wholeCsv.push_back(line);
 	}
-
-	// When you put huffman here, just have a condition here and return by calling that function
 
 	if (!huffman) {
 		return buildForKnapsack();
@@ -54,9 +52,7 @@ readCsv::readFile(std::string fileName, bool huffman = false)
 int 
 readCsv::buildForKnapsack()
 {
-	/*
-	* Builds the whole knapsack environment
-	*/
+	/* Builds the whole knapsack environment */
 
 	items.resize(2);
 	this->n_elem = atoi(this->wholeCsv[0].c_str());
@@ -90,12 +86,39 @@ readCsv::buildForKnapsack()
 }
 
 
+
 int 
 readCsv::buildForHuffman()
-{
+{	
+	/* Build the environment for huffman */
 
+	std::string current = "";
+	std::string cur = "";
+
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < this->wholeCsv[i].size(); j++) {
+			cur = this->wholeCsv[i][j];
+			if (cur == ",") {
+				if (i == 0) {
+					chars.push_back(current);
+				} else {
+					freqs.push_back(atoi(current.c_str()));
+				}
+				current = "";
+			} else if (cur == " ") {
+				continue;
+			} else {
+				current += cur;
+			}
+		}
+		if (i == 0) {
+			chars.push_back(current);
+		} else {
+			freqs.push_back(atoi(current.c_str()));
+		}
+		current = "";
+	}
 
 	return 0;
 }
-
 
