@@ -46,6 +46,7 @@ int
 Dynamic::findOptimalSolution()
 {
 	/* Builds the matrix structure for finding the optimal solution */
+	
 	int cur;
 
 	for (int i = 1; i <= this->n_elem; i++) {

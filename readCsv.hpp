@@ -92,6 +92,9 @@ readCsv::buildForHuffman()
 {	
 	/* Build the environment for huffman */
 
+	this->chars.push_back("");
+	this->freqs.push_back(0);
+
 	std::string current = "";
 	std::string cur = "";
 
@@ -100,9 +103,9 @@ readCsv::buildForHuffman()
 			cur = this->wholeCsv[i][j];
 			if (cur == ",") {
 				if (i == 0) {
-					chars.push_back(current);
+					this->chars.push_back(current);
 				} else {
-					freqs.push_back(atoi(current.c_str()));
+					this->freqs.push_back(atoi(current.c_str()));
 				}
 				current = "";
 			} else if (cur == " ") {
@@ -112,9 +115,9 @@ readCsv::buildForHuffman()
 			}
 		}
 		if (i == 0) {
-			chars.push_back(current);
+			this->chars.push_back(current);
 		} else {
-			freqs.push_back(atoi(current.c_str()));
+			this->freqs.push_back(atoi(current.c_str()));
 		}
 		current = "";
 	}

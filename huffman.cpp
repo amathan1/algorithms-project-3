@@ -6,105 +6,218 @@
 int
 Huffman::encode()
 {
+	/* Builds Huffman tree recursively */
 	
+	if (this->remaining == 1)
+		return 0;
+
+	HuffmanNode* first;
+	HuffmanNode* second;
+	HuffmanNode* newNode = new HuffmanNode;
+	int node_weight = 0;
+
+	node_weight += this->freqs[1];
+	first = extractMin();
+	node_weight += this->freqs[1];
+	second = extractMin();
+
+	newNode->leftChild = first;
+	newNode->rightChild = second;
+	this->remaining++;
+
+	this->treePtr[this->remaining] = newNode;
+	this->treePtr[this->remaining]->weight = node_weight;
+	this->freqs[this->remaining] = node_weight;
+	makeHeapifyCall(false);
+	encode();
+
+
+	return 0;
+}
+
+
+HuffmanNode*
+Huffman::extractMin()
+{
+	HuffmanNode* min = this->treePtr[1];
+
+	swap(1, this->remaining, false);
+	this->remaining--;
+	makeHeapifyCall(false);
+
+
+	return min;
+}
+
+
+int 
+Huffman::buildHuffmanTree()
+{
+	/* Build the Huffman tree recursively */
+
+	for (int i = 1; i < this->freqs.size(); i++) {
+		treePtr[i] = new HuffmanNode;
+		treePtr[i]->isLeaf = true;
+		treePtr[i]->item = this->chars[args[i]];
+		treePtr[i]->idx = args[i];
+	}
+
+	// Recursively encode the huffman tree
+	encode();
+
+	this->codes.resize(this->chars.size());
+
+	HuffmanNode* current;
+	HuffmanNode* left;
+	HuffmanNode* right;
+	std::vector <HuffmanNode*> stack;
+	std::vector <int> _args_(chars.size());
+
+	// Use depth-first-search to parse back the tree
+	stack.push_back(this->treePtr[1]);
+
+	while (stack.size() > 0) {
+		current = stack.back();
+		stack.pop_back();
+		left = current->leftChild;
+		if (left != nullptr) {
+			stack.push_back(left);
+			left->code += current->code;
+			left->code += "0";
+		}
+		right = current->rightChild;
+		if (right != nullptr) {
+			stack.push_back(right);
+			right->code += current->code;
+			right->code += "1";
+		}
+		if (current->isLeaf == true) {
+			this->codes[current->idx] = current->code;
+			_args_[args[current->idx]] = current->idx;
+		}
+	}
+
+	std::cout << "Codes: ";
+	for (int i = 1; i < this->chars.size(); i++) {
+		std::cout << this->codes[i] << "-" << this->chars[_args_[i]] << " ";
+	}
+	std::cout << std::endl;
+
+	// Free dynamically allocated memories
+	for (int i = 1; i < this->freqs.size(); i++) {
+		delete treePtr[i];
+	}
+	free(treePtr);
+
+	return 0;
+}
+
+
+int 
+Huffman::buildMinHeap()
+{
+
+	treePtr = (HuffmanNode**) malloc(sizeof(HuffmanNode*) * this->chars.size());
+
 	// Fill the indices vector to make reconstruction easier	
 	for (int i = 0; i < this->chars.size(); i++) {
 		this->args.push_back(i);
 	}
 
-	quick_sort(0, this->freqs.size());
-
-	// buildHuffmanTree();
-
-	return 0;
-}
-
-
-int 
-buildHuffmanTree()
-{
-	/* Build the Huffman tree recursively */
-
-	
-
-	
+	this->remaining = (this->freqs.size() - 1);
+	makeHeapifyCall(true);
 
 	return 0;
 }
 
 
-int 
-Huffman::partition(int low, int high)
+inline int
+Huffman::makeHeapifyCall(bool needed = true)
 {
-	/* Helper for quicksort */
-	int pivot, i, j, temp2;
-	int temp;
-	i = low - 1;
-	pivot = rand() % high;
+	/* One call to this function heapifies */
 
-	while (pivot < low)
-		pivot = rand() % high;
+	int last_node = this->remaining / 2;
+	this->change_made = true;
 
-
-	// For the elements
-	temp = this->freqs[pivot];
-	this->freqs[pivot] = this->freqs[high - 1];
-	this->freqs[high-1] = temp;
-
-	// For indices
-	temp2 = this->args[pivot];
-	this->args[pivot] = this->args[high-1];
-	this->args[high-1] = temp2;
-	
-
-	pivot = high -1;
-
-	for (j = low; j < high - 1; ++j)
-	{
-		if (this->freqs[j] < this->freqs[pivot]){
-			i++;
-			temp = this->freqs[i];
-			this->freqs[i] = this->freqs[j];
-			this->freqs[j] = temp;
-
-			temp2 = this->args[i];
-			this->args[i] = this->args[j];
-			this->args[j] = temp2;
-		}
+	while (this->change_made == true) {
+		this->change_made = false;
+		heapify(last_node, needed);
 	}
 
-	i++;
-	
-	// Move pivot back to its place
-	temp = this->freqs[i];
-	this->freqs[i] = this->freqs[pivot];
-	this->freqs[pivot] = temp;
-	
-	//For indices
-	temp2 = this->args[i];
-	this->args[i] = this->args[pivot];
-	this->args[pivot] = temp2;
-
-	return i;
-}
-
-
-
-int 
-Huffman::quick_sort(int low, int high)
-{
-	/* Quicksort: Pass by reference vector of integers and by value 0 and vector.size() */
-
-	int pivot;
-	if (high - low < 2)	return 0;
-	pivot = partition(low, high);
-
-	quick_sort(low, pivot);
-	quick_sort(pivot, high);
-
 	return 0;
 }
 
+
+inline void
+Huffman::swap(int node_1, int node_2, bool needed) 
+{
+	int temp_freq = this->freqs[node_1];
+	this->freqs[node_1] = this->freqs[node_2];
+	this->freqs[node_2] = temp_freq;
+
+	if (needed) {
+
+		std::string temp_enc = this->chars[node_1];
+		this->chars[node_1] = this->chars[node_2];
+		this->chars[node_2] = temp_enc;
+
+		int temp_arg = this->args[node_1];
+		this->args[node_1] = this->args[node_2];
+		this->args[node_2] = temp_arg;
+
+	} else {
+
+		HuffmanNode* temp = this->treePtr[node_1];
+		this->treePtr[node_1] = this->treePtr[node_2];
+		this->treePtr[node_2] = temp;
+
+	}
+}
+
+
+inline int 
+Huffman::heapifyChild(int parent, int side, bool needed)
+{
+	if (side == 0) {
+		int left_c = 2*parent;
+		if (this->remaining >= left_c) {
+			if (this->freqs[parent] > this->freqs[left_c]) {
+				swap(parent, left_c, needed);
+				this->change_made = true;
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	} else {
+		int right_c = 2*parent+1;
+		if (this->remaining >= right_c) {
+			if (this->freqs[parent] > this->freqs[right_c]) {
+				swap(parent, right_c, needed);
+				this->change_made = true;
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	// This return statement makes no sense but sometimes some undefined behaviour executes this line and returns garbage 
+	return 0;
+}
+
+
+
+int
+Huffman::heapify(int parent, bool needed)
+{
+
+	heapifyChild(parent, 0, needed);	// Heapify left child
+	heapifyChild(parent, 1, needed);	// Heapify right child
+
+	if (parent > 1)	heapify(parent - 1, needed);	// Heapify recursively till we reach root node
+
+	return 0;
+}
 
 
 
@@ -116,7 +229,9 @@ main(int argc, char* argv[])
 
 	Huffman hm(argv[1]);
 
-	hm.encode();
+	hm.buildMinHeap();
+
+	hm.buildHuffmanTree();
 
 	return 0;
 }

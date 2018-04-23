@@ -34,7 +34,8 @@ backtrack::recursivelyBacktrack(int start, int current_cost, int current_wt, std
 		return 0;
 
 	// Add the if promising here, else it will automatically return.
-	// What the heck does the KWF2() function do? Learn about it.
+	// What the heck does the KWF2() function do? Look up.
+	// Just do if (!promising())	return 0;
 
 	std::vector <int> klone;
 	clone(klone, current);
@@ -76,6 +77,7 @@ backtrack::printOut(std::vector <int> &sol)
 
 	std::cout << "Total Profit : " << profit << "\tTotal Weight : " << weight << "\nSelected Items : ";
 	for (auto i: sol)	std::cout << i+1 << " ";
+	
 	return 0;
 }
 

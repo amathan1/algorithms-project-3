@@ -18,7 +18,7 @@ bruteForce::findCombinations(int &r, int st, std::vector <int> &combination, std
 
 	for (int i = 0; i < new_clones.size(); i++)
 	{
-		if (done >= n_c_r)	continue;		// When we are done adding all combinations
+		if (done >= n_c_r)	return 0;		// When we are done adding all combinations
 		if (new_clones[i].size() == r) {
 			cur_comb[done] = new_clones[i];
 			done++;
