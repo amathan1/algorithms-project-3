@@ -14,7 +14,7 @@ Huffman::encode()
 
 	quick_sort(0, this->freqs.size());
 
-	buildHuffmanTree();
+	// buildHuffmanTree();
 
 	return 0;
 }

@@ -57,7 +57,7 @@ bruteForce::binomialCoeffecient(int r, std::vector < std::vector <int> >& cur_co
 		den *= (i+1);
 	}
 
-	// n_c_r is the binomial coefficient. We allocate memory to hold these many combinations
+	// n_c_r is the binomial coefficient. We pre-allocate memory to hold these many combinations
 	n_c_r = num / den;
 	cur_comb.resize(n_c_r);
 	std::vector <int> temp;

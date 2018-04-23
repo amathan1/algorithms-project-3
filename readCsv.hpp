@@ -16,11 +16,11 @@ public:
 
 protected:
 	
-	std::vector <std::string> wholeCsv;
+	std::vector <std::string> wholeCsv;		// The CSV file, parsed line by line
 	std::vector <std::vector <int> > items;	// Items are stored as {{set_of_item_values}, {set_of_item_weights}}
 	std::vector <std::string> chars;		// Characters to encode using huffman
 	std::vector <int> freqs;				// Corresponding frequencies of all the characters
-	int cc, n_elem;
+	int cc, n_elem;							// Knapsack capacity and number of elements available to loot
 
 };
 

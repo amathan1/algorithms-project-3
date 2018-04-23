@@ -18,7 +18,7 @@ public:
 
 	inline int max(int, int);
 
-	int printBoard();
+	int printOut();
 
 	int printOut;	
 

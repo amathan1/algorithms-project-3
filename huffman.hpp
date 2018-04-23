@@ -17,6 +17,8 @@ public:
 
 	int partition(int, int);
 
+	int buildHuffmanTree();	
+
 	int encode();
 
 
