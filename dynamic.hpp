@@ -13,8 +13,8 @@ public:
 	int findOptimalSolution();
 	int printOptimalSolution();
 	inline int max(int, int);
+	int printBoard();
 	int printOut();
-	int printOut;	
 
 private:
 	int** board;

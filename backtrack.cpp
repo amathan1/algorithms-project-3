@@ -12,6 +12,66 @@ backtrack::clone(std::vector <int> &dst, std::vector <int> &src)
 }
 
 
+
+inline int 
+backtrack::return_max_index(std::vector <int> &current)
+{
+	std::vector <int> __max__;
+	int max = 0;
+	int max_idx;
+
+	for (int x: this->fractions) {
+		__max__.push_back(x);
+	}
+	for (int x: current) {
+		__max__[x] = 0;
+	}
+
+	for (int i = 0; i < this->fractions.size(); i++) {
+		if (this->fractions[i] > max) {
+			max = this->fractions[i];
+			max_idx = i;
+		}
+	}
+	return max_idx;
+}
+
+
+
+bool
+backtrack::promising(int start, int current_cost, int current_wt, int &optimal_cost, std::vector <int> current)
+{
+
+	if (current_wt > this->cc)
+		return false;
+
+	int max_idx = return_max_index(current);
+	int wt_rem = this->cc - current_wt;
+	int wt_rem_cur = this->items[1][max_idx];
+
+	// Computing the bounds
+	while (wt_rem > 0) {
+
+		if (wt_rem_cur == 0) {
+			current.push_back(max_idx);
+			if (start == this->n_elem)
+				break;
+			max_idx = return_max_index(current);
+			wt_rem_cur = this->items[1][max_idx];
+		}
+
+		current_cost += this->fractions[max_idx];
+		wt_rem--;
+		wt_rem_cur--;
+
+	}
+
+	// If bound > current_optimal_cost, it is promising.
+	return (current_cost > optimal_cost);
+}
+
+
+
 int
 backtrack::recursivelyBacktrack(int start, int current_cost, int current_wt, std::vector <int>& optimal_vec, std::vector <int> current, int& optimal_cost)
 {
@@ -21,10 +81,10 @@ backtrack::recursivelyBacktrack(int start, int current_cost, int current_wt, std
 	* start - start point, optimal_vec - to store intermmediate results
 	* current - current vector
 	*/
-
-	if (current_wt > this->cc)
-		return 0;	
-
+	
+	if (!promising(start, current_cost, current_wt, optimal_cost, current))
+		return 0;
+	
 	if (current_cost > optimal_cost) {
 		clone(optimal_vec, current);
 		optimal_cost = current_cost;
@@ -32,10 +92,6 @@ backtrack::recursivelyBacktrack(int start, int current_cost, int current_wt, std
 		
 	if (start >= this->n_elem)
 		return 0;
-
-	// Add the if promising here, else it will automatically return.
-	// What the heck does the KWF2() function do? Look up.
-	// Just do if (!promising())	return 0;
 
 	std::vector <int> klone;
 	clone(klone, current);
@@ -55,6 +111,10 @@ backtrack::findOptimalSolution()
 	int optimal_cost = 0;
 	std::vector <int> optimal_vec;
 	std::vector <int> temp;
+
+	for (int i = 0; i < this->items[0].size(); i++) {
+		this->fractions.push_back(items[0][i]/items[1][i]);
+	}
 
 	recursivelyBacktrack(0, 0, 0, optimal_vec, temp, optimal_cost);
 	printOut(optimal_vec);

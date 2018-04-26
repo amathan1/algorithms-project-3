@@ -45,7 +45,6 @@ Huffman::extractMin()
 	this->remaining--;
 	makeHeapifyCall(false);
 
-
 	return min;
 }
 
@@ -62,7 +61,7 @@ Huffman::buildHuffmanTree()
 		treePtr[i]->idx = args[i];
 	}
 
-	// Recursively encode the huffman tree
+	// Recursively encode the characters
 	encode();
 
 	this->codes.resize(this->chars.size());
@@ -151,22 +150,26 @@ Huffman::makeHeapifyCall(bool needed = true)
 inline void
 Huffman::swap(int node_1, int node_2, bool needed) 
 {
+	// Swap the frequencies 
 	int temp_freq = this->freqs[node_1];
 	this->freqs[node_1] = this->freqs[node_2];
 	this->freqs[node_2] = temp_freq;
 
 	if (needed) {
 
+		// Swap the characters
 		std::string temp_enc = this->chars[node_1];
 		this->chars[node_1] = this->chars[node_2];
 		this->chars[node_2] = temp_enc;
 
+		// Swap the indices
 		int temp_arg = this->args[node_1];
 		this->args[node_1] = this->args[node_2];
 		this->args[node_2] = temp_arg;
 
 	} else {
 
+		// Swap the tree nodes
 		HuffmanNode* temp = this->treePtr[node_1];
 		this->treePtr[node_1] = this->treePtr[node_2];
 		this->treePtr[node_2] = temp;
@@ -178,6 +181,7 @@ Huffman::swap(int node_1, int node_2, bool needed)
 inline int 
 Huffman::heapifyChild(int parent, int side, bool needed)
 {
+	// Heapify operation on a left or right child
 	if (side == 0) {
 		int left_c = 2*parent;
 		if (this->remaining >= left_c) {
@@ -201,7 +205,6 @@ Huffman::heapifyChild(int parent, int side, bool needed)
 			}
 		}
 	}
-	// This return statement makes no sense but sometimes some undefined behaviour executes this line and returns garbage 
 	return 0;
 }
 
@@ -210,6 +213,7 @@ Huffman::heapifyChild(int parent, int side, bool needed)
 int
 Huffman::heapify(int parent, bool needed)
 {
+	// Actual heapify call
 
 	heapifyChild(parent, 0, needed);	// Heapify left child
 	heapifyChild(parent, 1, needed);	// Heapify right child
@@ -227,10 +231,13 @@ main(int argc, char* argv[])
 
 	if (argc != 2) {std::cerr << "[Usage] ./huffman.out <input_file_name>.csv"; exit(0);}
 
+	// Load the data 
 	Huffman hm(argv[1]);
 
+	// Build the min-heap 
 	hm.buildMinHeap();
 
+	// Build Huffman tree and print out the results
 	hm.buildHuffmanTree();
 
 	return 0;

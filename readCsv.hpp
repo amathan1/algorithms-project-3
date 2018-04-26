@@ -92,6 +92,7 @@ readCsv::buildForHuffman()
 {	
 	/* Build the environment for huffman */
 
+	// We index the min-heap from 1 for conveniance
 	this->chars.push_back("");
 	this->freqs.push_back(0);
 

@@ -46,7 +46,7 @@ int
 Dynamic::findOptimalSolution()
 {
 	/* Builds the matrix structure for finding the optimal solution */
-	
+
 	int cur;
 
 	for (int i = 1; i <= this->n_elem; i++) {
@@ -63,10 +63,46 @@ Dynamic::findOptimalSolution()
 }
 
 
+inline bool
+Dynamic::cond(int i, int j, int current_cost, int current_weight)
+{
+
+
+}
+
+
 int
 Dynamic::printOut()
 {
 	/* Print out the results */
+
+	std::vector <int> chosen;
+
+	int last = this->board[this->n_elem][this->cc+1];
+
+	// Keep going till you figure out whether the item is added (or not).
+	int current_cost = 
+	int row = this->n_elem;
+	int col = this->cc+1;
+
+	while (current_weight != 0 && current_cost != 0) {
+		if (this->board[row][col] == this->board[row][col-1]) {
+			col--;
+			continue;
+		}
+		else {
+			if (this->board[row-1][col] != this->board[row][col]) {
+				chosen.push_back(row);
+				row--;
+			} else {
+
+			}
+		}
+	}
+
+
+
+
 
 	return 0;
 }

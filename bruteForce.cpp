@@ -73,15 +73,31 @@ bruteForce::binomialCoeffecient(int r, std::vector < std::vector <int> >& cur_co
 
 
 int 
-bruteForce::findCosts(std::vector < std::vector <int> > &bc, std::vector <int> &costs)
+bruteForce::findCosts(std::vector < std::vector <int> > &bc, std::vector <int> &costs, std::vector <int> &idxs, int idx)
 {
 	/*
 	* Given a combination, find corresponding costs.
 	*/
 
+	int max = 0;
+	int weight = 0;
+	idxs[idx] = -1;
 
 
+	for (int i = 0; i < bc.size(); i++) {
+		costs.push_back(0);
+		weight = 0;
+		for (int j = 0; j < bc[i].size(); j++) {
+			costs[i] += this->items[0][bc[i][j]];
+			weight += this->items[1][bc[i][j]];
+		}
+		if (weight <= this->cc && costs[i] > max) {
+			idxs[idx] = i;
+			max = costs[i];
+		}
+	}
 
+	return 0;
 }
 
 
@@ -104,13 +120,33 @@ bruteForce::findOptimalCombination()
 	
 	std::vector < std::vector < std::vector <int> > > combinations;
 	std::vector < std::vector <int> > costs;
+	std::vector <int> idxs(this->n_elem);
 	combinations.resize(this->n_elem);
+	costs.resize(this->n_elem);
 
 	// We calculate the combinations for knapsack with all capacities
 	for (int i = 0; i < this->n_elem; i++) {
 		binomialCoeffecient(i+1, combinations[i]);
-		findCosts(combinations[i], costs[i]);
+		findCosts(combinations[i], costs[i], idxs, i);
 	}
+
+	int max = 0;
+	int max_idx;
+
+	for (int i = 0; i < idxs.size(); i++) {
+		if (costs[i][idxs[i]] > max && idxs[i] > 0) {
+			max = costs[i][idxs[i]];
+			max_idx = i;
+		}
+	}
+
+	std::cout << "Maximum cost: " << costs[max_idx][idxs[max_idx]] << std::endl;
+
+	std::cout << "Selected items are ";
+	for (int i = 0; i < combinations[max_idx][idxs[max_idx]].size(); i++) {
+		std::cout << combinations[max_idx][idxs[max_idx]][i] << " ";
+	}
+	std::cout << std::endl;
 
 	return 0;
 }
