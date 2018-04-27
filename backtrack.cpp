@@ -18,7 +18,7 @@ backtrack::return_max_index(std::vector <int> &current)
 {
 	std::vector <int> __max__;
 	int max = 0;
-	int max_idx;
+	int max_idx = -1;
 
 	for (int x: this->fractions) {
 		__max__.push_back(x);
@@ -49,7 +49,7 @@ backtrack::promising(int start, int current_cost, int current_wt, int &optimal_c
 	int wt_rem = this->cc - current_wt;
 	int wt_rem_cur = this->items[1][max_idx];
 
-	// Computing the bounds
+	// Compute the bounds
 	while (wt_rem > 0) {
 
 		if (wt_rem_cur == 0) {
@@ -57,6 +57,7 @@ backtrack::promising(int start, int current_cost, int current_wt, int &optimal_c
 			if (start == this->n_elem)
 				break;
 			max_idx = return_max_index(current);
+			if (max_idx == -1)	return true;
 			wt_rem_cur = this->items[1][max_idx];
 		}
 
@@ -135,8 +136,11 @@ backtrack::printOut(std::vector <int> &sol)
 		profit += this->items[0][i];
 	}
 
-	std::cout << "Total Profit : " << profit << "\tTotal Weight : " << weight << "\nSelected Items : ";
+	std::cout << "Total Profit : " << profit << std::endl;
+	std::cout << "Total Weight : " << weight << std::endl;
+	std::cout << "Selected Items : ";
 	for (auto i: sol)	std::cout << i+1 << " ";
+	std::cout << std::endl;
 	
 	return 0;
 }

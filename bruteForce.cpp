@@ -114,7 +114,7 @@ bruteForce::findOptimalCombination()
 	}
 
 	if (this->cc < min) {
-		std::cerr << "There is no optimal solution. The knapsack capacity is lower than the smallest item";
+		std::cerr << "There is no optimal solution. The knapsack capacity(" << this->cc << ") is lower than the smallest item(" << min << ")" << std::endl;;
 		exit(0);
 	}
 	
@@ -132,6 +132,7 @@ bruteForce::findOptimalCombination()
 
 	int max = 0;
 	int max_idx;
+	int total_wt = 0;
 
 	for (int i = 0; i < idxs.size(); i++) {
 		if (costs[i][idxs[i]] > max && idxs[i] > 0) {
@@ -140,12 +141,18 @@ bruteForce::findOptimalCombination()
 		}
 	}
 
-	std::cout << "Maximum cost: " << costs[max_idx][idxs[max_idx]] << std::endl;
-
-	std::cout << "Selected items are ";
 	for (int i = 0; i < combinations[max_idx][idxs[max_idx]].size(); i++) {
-		std::cout << combinations[max_idx][idxs[max_idx]][i] << " ";
+		total_wt += this->items[1][combinations[max_idx][idxs[max_idx]][i]];
 	}
+
+	std::cout << "Total Profit: " << costs[max_idx][idxs[max_idx]] << std::endl;
+	std::cout << "Total Weight: " << total_wt << std::endl;
+	std::cout << "Items Selected: ";
+	
+	for (int i = 0; i < combinations[max_idx][idxs[max_idx]].size(); i++) {
+		std::cout << combinations[max_idx][idxs[max_idx]][i]+1 << " ";
+	}
+	
 	std::cout << std::endl;
 
 	return 0;

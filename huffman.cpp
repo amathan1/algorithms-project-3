@@ -96,9 +96,13 @@ Huffman::buildHuffmanTree()
 		}
 	}
 
-	std::cout << "Codes: ";
 	for (int i = 1; i < this->chars.size(); i++) {
-		std::cout << this->codes[i] << "-" << this->chars[_args_[i]] << " ";
+		std::cout << this->chars[_args_[i]] << "\t"; 
+	}
+	std::cout << std::endl;	
+
+	for (int i = 1; i < this->chars.size(); i++) {
+		std::cout << this->codes[i] << "\t";
 	}
 	std::cout << std::endl;
 
