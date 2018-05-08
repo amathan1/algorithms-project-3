@@ -135,7 +135,7 @@ bruteForce::findOptimalCombination()
 	int total_wt = 0;
 
 	for (int i = 0; i < idxs.size(); i++) {
-		if (costs[i][idxs[i]] > max && idxs[i] > 0) {
+		if (costs[i][idxs[i]] > max && idxs[i] >= 0) {
 			max = costs[i][idxs[i]];
 			max_idx = i;
 		}
