@@ -29,10 +29,8 @@ Huffman::encode()
 	this->treePtr[this->remaining]->weight = node_weight;
 	this->freqs[this->remaining] = node_weight;
 	makeHeapifyCall(false);
-	encode();
 
-
-	return 0;
+	return encode();
 }
 
 
